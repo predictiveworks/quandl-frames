@@ -169,7 +169,7 @@ trait HttpConnect extends Logging {
   def get(endpoint:String, headers:Map[String,String]=Map.empty[String,String]):Source[ByteString,Any] = {
 
     try {
-      
+       
       val request = {
         
         if (headers.isEmpty)        
@@ -179,6 +179,7 @@ trait HttpConnect extends Logging {
           HttpRequest(HttpMethods.GET, endpoint, headers=headers.map{case(k,v) => RawHeader(k, v)}.toList)
 
       }
+
       val future: Future[HttpResponse] = Http(system).singleRequest(request)
 
       val response = Await.result(future, duration)
